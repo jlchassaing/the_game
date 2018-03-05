@@ -1,5 +1,5 @@
 {
-  "name": "react",
+  "name": "my-react",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -16,8 +16,13 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
+    "react-hot-loader": "^4.0.0",
     "webpack": "^4.1.0",
     "webpack-cli": "^2.0.10",
     "webpack-dev-server": "^3.1.0"
+  },
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
   }
 }
