@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Game from './Game';
 
+
 const App = props => (
   <div>
     <h1>{props.title}</h1>
@@ -9,11 +10,8 @@ const App = props => (
   </div>);
 
 App.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.string.isRequired,
 };
 
-App.defaultProps = {
-  title: 'Application title',
-};
 
 export default App;

@@ -1,23 +1,30 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import Provider from 'react-redux';
-import Redux from 'redux';
-import App from './App';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+
+import { composeWithDevTools } from 'redux-devtools-extension';
+
+import ErrorBoundary from './ErrorBoundary';
 import rootReducer from './Reducers';
-import { loadGame } from './Actions';
+import App from './App';
 
-const store = Redux.createStore(rootReducer, loadGame);
+const thunk = ({ dispatch, getState }) => next => action => (
+  typeof action === 'function'
+    ? action(dispatch, getState)
+    : next(action)
+);
 
-const props = {
-  title: 'My Minimal React Webpack Babel Setup',
-  videoPath: 'http://video.gendarmerie.interieur.gouv.fr/' +
-                  '18_024_AC_HOMMAGE_AUX_MORTS.mp4',
-};
+
+const store = createStore(rootReducer, { app: { } }, composeWithDevTools(applyMiddleware(thunk)));
 
 ReactDom.render(
-  <Provider store={store}>
-    <App props={props} />
-  </Provider>,
+  <Provider store={store} >
+    <ErrorBoundary>
+      <App title="test" />
+    </ErrorBoundary>
+  </Provider>
+  ,
   document.getElementById('app'),
 );
 

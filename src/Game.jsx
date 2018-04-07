@@ -1,25 +1,37 @@
 import React from 'react';
 
-import connect from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { loadGame } from './Actions';
 import Video from './Video';
 
-const Game = ({ videoList }) => (
-  <div>
-    {videoList.map(video =>
-      <Video id={video.id} path={video.path} />)}
-  </div>
-);
+class Game extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { games: [] };
+  }
+
+  componentDidMount = () => {
+    const games = this.props.loadGame();
+    console.log(games);
+    this.setState({ games });
+  };
+
+  render() {
+    return (
+      <div>
+        {this.state.games.map(video =>
+          <Video id={video.id} path={video.path} />)}
+      </div>);
+  }
+}
 
 Game.propTypes = {
-  videoList: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    path: PropTypes.string.isRequired,
-  })).isRequired,
+  loadGame: PropTypes.func.isRequired,
 };
 
-const mapStateToPropos = state => ({
+const mapStateToProps = state => ({
   videoList: state.videos,
 });
 
-export default connect(mapStateToPropos, null)(Game);
+export default connect(mapStateToProps, { loadGame })(Game);

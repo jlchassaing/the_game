@@ -1,4 +1,4 @@
-
+import fetch from 'cross-fetch';
 
 const loadGamePath = 'http://game.test/rest/load';
 const unswerVideoGamePath = '';
@@ -19,13 +19,13 @@ export const SET_GAME = 'SET_GAME';
 export const LOAD_VIDEO = 'LOAD_VIDEO';
 export const UNSWER_VIDEO = 'UNSWER_VIDEO';
 
-export const loadGame = () => fetch(loadGamePath).then(response => response.json())
-  .then(responseJson => ({ type: SET_GAME, videos: responseJson.videos }))
-  .catch(error => (error));
+export const loadGame = dispatch => fetch(loadGamePath).then(response => response.json())
+  .then(responseJson => dispatch({ type: SET_GAME, games: responseJson.games }))
+  .catch(error => error);
 
 export const loadVideo = id => fetch(loadVideoPath, { method: 'GET', body: { id } })
-  .then(response => response.JSON)
-  .catch(error => (error));
+  .then(response => response.json())
+  .catch(error => error);
 
 export const testUnswer = ({ videoId, unswer }) => fetch(unswerVideoGamePath, {
   ...defaultPostHeaders,
@@ -33,5 +33,5 @@ export const testUnswer = ({ videoId, unswer }) => fetch(unswerVideoGamePath, {
     videoId,
     unswer,
   }),
-}).then(response => response.JSON)
-  .catch(error => (error));
+}).then(response => response.json())
+  .catch(error => error);
